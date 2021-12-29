@@ -13,7 +13,7 @@ versionsDict = {
            }
 
 loop = asyncio.get_event_loop()
-versionList = asyncio.get_event_loop().run_until_complete(db.get_all_versions())
+versionList = asyncio.ensure_future(db.get_all_versions())
 
 for x in versionList:
     currID = x["versionid"]
