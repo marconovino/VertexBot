@@ -53,13 +53,6 @@ async def on_message(message):
     if message.author == bot.user:
         return
 
-class Versions(Resource):
-    def get(self, versionid):
-        return versions[versionid]
-
-api.add_resource(Versions, "/versions/<string:versionid>")
-if __name__ == "__main__":
-    app.run(debug=False)
 
 @bot.command()
 async def getdownload(ctx, versionID):
