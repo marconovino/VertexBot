@@ -79,16 +79,19 @@ async def createbuild(ctx, versionID, downloadLink):
     if role not in ctx.author.roles:
         return
     else:
-        versionList = await bot.db.get_all_versions()
-        for x in versionList:
-            versionIdList.append(x["versionid"])
-        if versionID not in versionIdList:
-            await bot.db.create_version_link(versionID, downloadLink)
-            embed = discord.Embed(title=f"Database entry created for {versionID}", description=f"Successfully created database entry for {versionID} with the download link: {downloadLink}", color=0x0c0f27)
+        if "https://api.onedrive.com/v1.0/shares/" in downloadLink:
+            versionList = await bot.db.get_all_versions()
+            for x in versionList:
+                versionIdList.append(x["versionid"])
+            if versionID not in versionIdList:
+                await bot.db.create_version_link(versionID, downloadLink)
+                embed = discord.Embed(title=f"Database entry created for {versionID}", description=f"Successfully created database entry for {versionID} with the download link: {downloadLink}", color=0x0c0f27)
+            else:
+                x = await bot.db.get_version_link(versionID)
+                downloadmoment = x["versiondownload"]
+                embed = discord.Embed(title=f"Version {versionID} already exists", description=f"Version {versionID} already exists with the link {downloadmoment} \n if this is the incorrect link update it using !updatelink", color=0x0c0f27)
         else:
-            x = await bot.db.get_version_link(versionID)
-            downloadmoment = x["versiondownload"]
-            embed = discord.Embed(title=f"Version {versionID} already exists", description=f"Version {versionID} already exists with the link {downloadmoment} \n if this is the incorrect link update it using !updatelink", color=0x0c0f27)
+            embed = discord.Embed(title=f"Wrong link", description=f"The link {downloadLink} is not a valid direct download link", color=0x0c0f27)    
         await ctx.send(embed=embed)
 
 @bot.command()
