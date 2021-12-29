@@ -93,7 +93,7 @@ async def versions(ctx):
     versionList = await bot.db.get_all_versions()
     embed = discord.Embed(title="Every available build:", color=0x0c0f27)
     for x in versionList:
-        currID = x["versionID"]
+        currID = x["versionid"]
         embed.add_field(name=f"{currID}",inline=False)
     await ctx.send(embed=embed)
 
