@@ -56,7 +56,6 @@ async def on_message(message):
         return
     if message.author == bot.user:
         return
-    
 
 @bot.command()
 async def getdownload(ctx, versionID):
