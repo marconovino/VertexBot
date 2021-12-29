@@ -4,3 +4,4 @@ discordUtils
 discord-webhook
 flask 
 flask_restful
+gunicorn
