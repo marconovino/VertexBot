@@ -2,3 +2,5 @@ discord
 asyncpg
 discordUtils
 discord-webhook
+flask 
+flask_restful
