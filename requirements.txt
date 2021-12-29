@@ -1,0 +1,4 @@
+discord
+asyncpg
+discordUtils
+discord-webhook
