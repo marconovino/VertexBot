@@ -20,7 +20,7 @@ print(versionsDict)
 
 class Versions(Resource):
     def get(self, versionid):
-        return versions[versionid]
+        return versionsDict[versionid]
 
 api.add_resource(Versions, "/versions/<string:versionid>")
 if __name__ == "__main__":
