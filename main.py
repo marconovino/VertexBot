@@ -15,7 +15,7 @@ from discord.utils import get
 from discord_webhook import DiscordWebhook
 
 #you shouldnt touch any of this ngl 
-def str(randomColor()):
+def randomColor():
     return str(hex(random.randint(0,16777215))) 
 
 bot = commands.Bot(command_prefix = '!', activity=discord.Game(name="Keeping track of builds"))
