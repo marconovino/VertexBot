@@ -10,6 +10,8 @@ from db import Database
 from typing import Text, Tuple
 from math import sqrt
 from discord.utils import get
+from flask import Flask
+from flask_restful import Api, Resource
 from discord_webhook import DiscordWebhook
 
 bot = commands.Bot(command_prefix = '!', activity=discord.Game(name="Keeping track of builds"))
@@ -21,6 +23,12 @@ startupWebhook = os.getenv('STARTUP')
 roleList = []
 versionIdList = []
 plembed = discord.Embed(title=f"Only people with Bot operator can give me orders", description="You cant control me you mere mortal", colour = random.randint(0, 0xFFFFFF))
+app = Flask(__name__)
+api = Api(app)
+versionsDict = {
+            "0.0.1":"youtube.com", 
+            "0.0.2":"you1tube.com"
+           }
 
 @bot.event
 async def on_ready():
@@ -36,8 +44,16 @@ async def on_ready():
 
 @bot.listen()
 async def on_connect():
+    global versionsDict
     await bot.db.setup()
     print("database loaded")
+    versionList = await bot.db.get_all_versions()
+    for x in versionList:
+        currID = x["versionid"]
+        currLink = x["versiondownload"]
+        versionsDict.update({currID:currLink})
+    print(versionsDict)
+
 
 @bot.listen()
 async def on_message(message):
@@ -48,6 +64,14 @@ async def on_message(message):
         return
     if message.author == bot.user:
         return
+
+class Versions(Resource):
+    def get(self, versionid):
+        return versions[versionid]
+
+api.add_resource(Versions, "/versions/<string:versionid>")
+if __name__ == "__main__":
+    app.run(debug=True)
 
 @bot.command()
 async def getdownload(ctx, versionID):
@@ -149,5 +173,6 @@ async def on_command_error(ctx, error):
                               colour = random.randint(0, 0xFFFFFF))
         await ctx.send(embed=embed)
         raise error
+
 
 bot.run(TOKEN) #starts the nuclear reactor
