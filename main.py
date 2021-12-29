@@ -14,10 +14,6 @@ from math import sqrt
 from discord.utils import get
 from discord_webhook import DiscordWebhook
 
-#you shouldnt touch any of this ngl 
-def randomColor():
-    return str(hex(random.randint(0,16777215))) 
-
 bot = commands.Bot(command_prefix = '!', activity=discord.Game(name="Keeping track of builds"))
 TOKEN = os.getenv('BOT_TOKEN')
 guild = bot.get_guild(880015752533528626)
@@ -26,7 +22,7 @@ bot.db = Database()
 startupWebhook = os.getenv('STARTUP')
 roleList = []
 versionIdList = []
-plembed = discord.Embed(title=f"Only people with Bot operator can give me orders", description="You cant control me you mere mortal", color=str(str(randomColor())))
+plembed = discord.Embed(title=f"Only people with Bot operator can give me orders", description="You cant control me you mere mortal", colour = random.randint(0, 0xFFFFFF))
 
 @bot.event
 async def on_ready():
@@ -65,13 +61,13 @@ async def getdownload(ctx, versionID):
         for x in versionList:
             versionIdList.append(x["versionid"])
         if versionID not in versionIdList:
-            embed = discord.Embed(title=f"Version {versionID} not found", description="Please check the spelling, here are all the currently available versions:", color=str(randomColor()))
+            embed = discord.Embed(title=f"Version {versionID} not found", description="Please check the spelling, here are all the currently available versions:", colour = random.randint(0, 0xFFFFFF))
             for x in versionIdList:
                 embed.add_field(name=x[versionID], value="--------",inline=False)
             await ctx.send(embed = embed)
         else:
             x = await bot.db.get_version_link(versionID)
-            embed = discord.Embed(title=f"download link for {versionID}", description=x["versiondownload"], color=str(randomColor()))
+            embed = discord.Embed(title=f"download link for {versionID}", description=x["versiondownload"], colour = random.randint(0, 0xFFFFFF))
             await ctx.send(embed=embed)
 
 @bot.command()
@@ -86,13 +82,13 @@ async def createbuild(ctx, versionID, downloadLink):
                 versionIdList.append(x["versionid"])
             if versionID not in versionIdList:
                 await bot.db.create_version_link(versionID, downloadLink)
-                embed = discord.Embed(title=f"Database entry created for {versionID}", description=f"Successfully created database entry for {versionID} with the download link: {downloadLink}", color=str(randomColor()))
+                embed = discord.Embed(title=f"Database entry created for {versionID}", description=f"Successfully created database entry for {versionID} with the download link: {downloadLink}", colour = random.randint(0, 0xFFFFFF))
             else:
                 x = await bot.db.get_version_link(versionID)
                 downloadmoment = x["versiondownload"]
-                embed = discord.Embed(title=f"Version {versionID} already exists", description=f"Version {versionID} already exists with the link {downloadmoment} \n if this is the incorrect link update it using !updatelink", color=str(randomColor()))
+                embed = discord.Embed(title=f"Version {versionID} already exists", description=f"Version {versionID} already exists with the link {downloadmoment} \n if this is the incorrect link update it using !updatelink", colour = random.randint(0, 0xFFFFFF))
         else:
-            embed = discord.Embed(title=f"Wrong link", description=f"The link {downloadLink} is not a valid direct download link", color=str(randomColor()))    
+            embed = discord.Embed(title=f"Wrong link", description=f"The link {downloadLink} is not a valid direct download link", colour = random.randint(0, 0xFFFFFF))    
         await ctx.send(embed=embed)
 
 @bot.command()
@@ -102,7 +98,7 @@ async def updatelink(ctx, versionID, downloadLink):
         return
     else:
         await bot.db.update_version_link(downloadLink, versionID)
-        embed = discord.Embed(title=f"download link for {versionID} successfully updated", color=str(randomColor()))
+        embed = discord.Embed(title=f"download link for {versionID} successfully updated", colour = random.randint(0, 0xFFFFFF))
         await ctx.send(embed=embed)
 
 @bot.command()
@@ -112,7 +108,7 @@ async def versions(ctx):
         return
     else:
         versionList = await bot.db.get_all_versions()
-        embed = discord.Embed(title="Every available build:", color=str(randomColor()))
+        embed = discord.Embed(title="Every available build:", colour = random.randint(0, 0xFFFFFF))
         for x in versionList:
             currID = x["versionid"]
             embed.add_field(name=f"{currID}", value="--------",inline=False)
@@ -122,7 +118,7 @@ async def versions(ctx):
 async def convertLink(ctx, link):
     driveLink = link.replace("https://1drv.ms/u/","https://api.onedrive.com/v1.0/shares/")
     DdLink = driveLink[:-9] + "/root/content"
-    embed = discord.Embed(title=f"direct download link for {link} successfully created", description=f"Direct download link: {DdLink}" ,color=str(randomColor()))
+    embed = discord.Embed(title=f"direct download link for {link} successfully created", description=f"Direct download link: {DdLink}" ,colour = random.randint(0, 0xFFFFFF))
     await ctx.send(embed = embed) 
 
 @bot.event
