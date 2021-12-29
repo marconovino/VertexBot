@@ -17,3 +17,11 @@ for x in versionList:
     currLink = x["versiondownload"]
     versionsDict.update({currID:currLink})
 print(versionsDict)
+
+class Versions(Resource):
+    def get(self, versionid):
+        return versions[versionid]
+
+api.add_resource(Versions, "/versions/<string:versionid>")
+if __name__ == "__main__":
+    app.run(debug=False)
