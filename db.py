@@ -39,3 +39,6 @@ class Database:
 
     async def get_all_versions(self):
         return await self.fetch("SELECT * FROM Versions")
+        
+    def get_all_versions(self):
+        return self.fetch("SELECT * FROM Versions")

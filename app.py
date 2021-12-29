@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_restful import Api, Resource
 from db import Database
+import asyncio
 
 db = Database()
 
@@ -10,7 +11,6 @@ versionsDict = {
             "0.0.1":"youtube.com", 
             "0.0.2":"you1tube.com"
            }
-
 versionList = db.get_all_versions()
 for x in versionList:
     currID = x["versionid"]
