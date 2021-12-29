@@ -24,6 +24,7 @@ bot.db = Database()
 startupWebhook = os.getenv('STARTUP')
 roleList = []
 versionIdList = []
+plembed = discord.Embed(title=f"Only people with Bot operator can give me orders", description="You cant control me you mere mortal", color=0x0c0f27)
 
 @bot.event
 async def on_ready():
