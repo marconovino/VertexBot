@@ -16,13 +16,14 @@ from discord_webhook import DiscordWebhook
 
 #you shouldnt touch any of this ngl 
 
-bot = commands.Bot(command_prefix = '>', activity=discord.Game(name="Keeping track of builds"))
+bot = commands.Bot(command_prefix = '!', activity=discord.Game(name="Keeping track of builds"))
 TOKEN = os.getenv('BOT_TOKEN')
 guild = bot.get_guild(880015752533528626)
 DATABASE_URL = os.environ['DATABASE_URL']
 bot.db = Database()
 startupWebhook = os.getenv('STARTUP')
 roleList = []
+versionIdList = []
 
 @bot.event
 async def on_ready():
@@ -50,7 +51,20 @@ async def on_message(message):
         return
     if message.author == bot.user:
         return
-    user = await bot.db.get_user(message.author.id)
+    
+
+@bot.command()
+async def getdownload(ctx, versionID):
+    versionList = bot.db.get_all_versions()
+    for x in versionList:
+        versionIdList.append(x["versionid"])
+    if versionID not in versionIdList:
+        embed = discord.Embed(title=f"Version {versionID} not found", description="Please check the spelling, here are all the currently available versions:", color=0x0c0f27)
+        for x in versionIdList:
+            embed.add_field(name=x[versionID],inline=False)
+        ctx.send(embed = embed)
+    
+
 
 @bot.event
 async def on_command_error(ctx, error):

@@ -1,12 +1,10 @@
 from asyncpg import create_pool
 from os import getenv
 
-#CREATE = """CREATE TABLE IF NOT EXISTS Versions (
-#  versionid BIGINT NOT NULL PRIMARY KEY,
-#  xp BIGINT NOT NULL,
-#  last_xp TIMESTAMP NOT NULL DEFAULT NOW(),
-#  balance BIGINT NOT NULL DEFAULT 0
-#);"""
+CREATE = """CREATE TABLE IF NOT EXISTS Versions (
+  versionid VARCHAR(65535),
+  versiondownload VARCHAR(65535)
+);"""
 
 class Database:
     """A database interface for the bot to connect to Postgres."""
@@ -16,7 +14,7 @@ class Database:
 
     async def setup(self):
         self.pool = await create_pool(dsn=getenv("DATABASE_URL"))
-        #await self.execute(CREATE)
+        await self.execute(CREATE)
 
     async def execute(self, query: str, *args):
         async with self.pool.acquire() as conn:
@@ -39,3 +37,5 @@ class Database:
     async def get_version_link(self, versionID: str):
         return await self.fetchrow("SELECT * FROM Versions WHERE versionid = $1;", versionID)
 
+    async def get_all_versions(self):
+        return await self.fetch("SELECT * FROM Versions")
