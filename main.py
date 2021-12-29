@@ -1,4 +1,3 @@
-from functools import _Descriptor
 import discord
 import math
 import random
