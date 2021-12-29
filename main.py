@@ -123,11 +123,12 @@ async def convertLink(ctx, link):
     await ctx.send(embed = embed) 
 
 @bot.command()
-async def suggest(ctx, suggestion):
+async def suggest(ctx, *,suggestion):
     embed = discord.Embed(title=f"Suggested by {ctx.author.name}", description=suggestion ,colour = random.randint(0, 0xFFFFFF))
     msg = await ctx.send(embed=embed)
     await msg.add_reaction("👍")
     await msg.add_reaction("👎")
+    await ctx.message.delete()
 
 @bot.event
 async def on_command_error(ctx, error):
