@@ -11,7 +11,7 @@ versionsDict = {
             "0.0.1":"youtube.com", 
             "0.0.2":"you1tube.com"
            }
-versionList = db.get_all_versions()
+versionList = db.acquireVersions()
 for x in versionList:
     currID = x["versionid"]
     currLink = x["versiondownload"]
