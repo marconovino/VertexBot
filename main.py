@@ -71,7 +71,7 @@ class Versions(Resource):
 
 api.add_resource(Versions, "/versions/<string:versionid>")
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
 
 @bot.command()
 async def getdownload(ctx, versionID):
