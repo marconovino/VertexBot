@@ -66,7 +66,7 @@ async def getdownload(ctx, versionID):
         if versionID not in versionIdList:
             embed = discord.Embed(title=f"Version {versionID} not found", description="Please check the spelling, here are all the currently available versions:", color=0x0c0f27)
             for x in versionIdList:
-                embed.add_field(name=x[versionID], value="\n",inline=False)
+                embed.add_field(name=x[versionID], value="--------",inline=False)
             await ctx.send(embed = embed)
         else:
             x = await bot.db.get_version_link(versionID)
@@ -111,7 +111,7 @@ async def versions(ctx):
         embed = discord.Embed(title="Every available build:", color=0x0c0f27)
         for x in versionList:
             currID = x["versionid"]
-            embed.add_field(name=f"{currID}", value="\n",inline=False)
+            embed.add_field(name=f"{currID}", value="--------",inline=False)
         await ctx.send(embed=embed)
 
 @bot.event
