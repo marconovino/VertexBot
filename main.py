@@ -88,6 +88,15 @@ async def updatelink(ctx, versionID, downloadLink):
     embed = discord.Embed(title=f"download link for {versionID} successfully updated", color=0x0c0f27)
     await ctx.send(embed=embed)
 
+@bot.command()
+async def versions(ctx):
+    versionList = await bot.db.get_all_versions()
+    embed = discord.Embed(title="Every available build:", color=0x0c0f27)
+    for x in versionList:
+        currID = x["versionID"]
+        embed.add_field(name=f"{currID}",inline=False)
+    await ctx.send(embed=embed)
+
 @bot.event
 async def on_command_error(ctx, error):
     logging.error(f'Error on command {ctx.invoked_with}, {error}')
