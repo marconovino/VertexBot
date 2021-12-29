@@ -55,47 +55,63 @@ async def on_message(message):
 
 @bot.command()
 async def getdownload(ctx, versionID):
-    versionList = await bot.db.get_all_versions()
-    for x in versionList:
-        versionIdList.append(x["versionid"])
-    if versionID not in versionIdList:
-        embed = discord.Embed(title=f"Version {versionID} not found", description="Please check the spelling, here are all the currently available versions:", color=0x0c0f27)
-        for x in versionIdList:
-            embed.add_field(name=x[versionID],inline=False)
-        await ctx.send(embed = embed)
+    role = discord.utils.get(ctx.guild.roles, name="Bot operator")
+    if role not in ctx.author.roles:
+        return
     else:
-        x = await bot.db.get_version_link(versionID)
-        embed = discord.Embed(title=f"download link for {versionID}", description=x["versiondownload"], color=0x0c0f27)
-        await ctx.send(embed=embed)
+        versionList = await bot.db.get_all_versions()
+        for x in versionList:
+            versionIdList.append(x["versionid"])
+        if versionID not in versionIdList:
+            embed = discord.Embed(title=f"Version {versionID} not found", description="Please check the spelling, here are all the currently available versions:", color=0x0c0f27)
+            for x in versionIdList:
+                embed.add_field(name=x[versionID],inline=False)
+            await ctx.send(embed = embed)
+        else:
+            x = await bot.db.get_version_link(versionID)
+            embed = discord.Embed(title=f"download link for {versionID}", description=x["versiondownload"], color=0x0c0f27)
+            await ctx.send(embed=embed)
 
 @bot.command()
 async def createbuild(ctx, versionID, downloadLink):
-    versionList = await bot.db.get_all_versions()
-    for x in versionList:
-        versionIdList.append(x["versionid"])
-    if versionID not in versionIdList:
-        await bot.db.create_version_link(versionID, downloadLink)
-        embed = discord.Embed(title=f"Database entry created for {versionID}", description=f"Successfully created database entry for {versionID} with the download link: {downloadLink}", color=0x0c0f27)
+    role = discord.utils.get(ctx.guild.roles, name="Bot operator")
+    if role not in ctx.author.roles:
+        return
     else:
-        x = await bot.db.get_version_link(versionID)
-        downloadmoment = x["versiondownload"]
-        embed = discord.Embed(title=f"Version {versionID} already exists", description=f"Version {versionID} already exists with the link {downloadmoment} \n if this is the incorrect link update it using !updatelink", color=0x0c0f27)
-    await ctx.send(embed=embed)
+        versionList = await bot.db.get_all_versions()
+        for x in versionList:
+            versionIdList.append(x["versionid"])
+        if versionID not in versionIdList:
+            await bot.db.create_version_link(versionID, downloadLink)
+            embed = discord.Embed(title=f"Database entry created for {versionID}", description=f"Successfully created database entry for {versionID} with the download link: {downloadLink}", color=0x0c0f27)
+        else:
+            x = await bot.db.get_version_link(versionID)
+            downloadmoment = x["versiondownload"]
+            embed = discord.Embed(title=f"Version {versionID} already exists", description=f"Version {versionID} already exists with the link {downloadmoment} \n if this is the incorrect link update it using !updatelink", color=0x0c0f27)
+        await ctx.send(embed=embed)
 
 @bot.command()
 async def updatelink(ctx, versionID, downloadLink):
-    await bot.db.update_version_link(downloadLink, versionID)
-    embed = discord.Embed(title=f"download link for {versionID} successfully updated", color=0x0c0f27)
-    await ctx.send(embed=embed)
+    role = discord.utils.get(ctx.guild.roles, name="Bot operator")
+    if role not in ctx.author.roles:
+        return
+    else:
+        await bot.db.update_version_link(downloadLink, versionID)
+        embed = discord.Embed(title=f"download link for {versionID} successfully updated", color=0x0c0f27)
+        await ctx.send(embed=embed)
 
 @bot.command()
 async def versions(ctx):
-    versionList = await bot.db.get_all_versions()
-    embed = discord.Embed(title="Every available build:", color=0x0c0f27)
-    for x in versionList:
-        currID = x["versionid"]
-        embed.add_field(name=f"{currID}",inline=False)
-    await ctx.send(embed=embed)
+    role = discord.utils.get(ctx.guild.roles, name="Bot operator")
+    if role not in ctx.author.roles:
+        return
+    else:
+        versionList = await bot.db.get_all_versions()
+        embed = discord.Embed(title="Every available build:", color=0x0c0f27)
+        for x in versionList:
+            currID = x["versionid"]
+            embed.add_field(name=f"{currID}",inline=False)
+        await ctx.send(embed=embed)
 
 @bot.event
 async def on_command_error(ctx, error):
