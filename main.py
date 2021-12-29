@@ -1,10 +1,8 @@
 import discord
-import math
 import random
 import asyncio
 import logging
 import os
-import datetime
 from discord.ext import commands, tasks
 import re
 from discord import Intents
@@ -88,7 +86,7 @@ async def createbuild(ctx, versionID, downloadLink):
                 downloadmoment = x["versiondownload"]
                 embed = discord.Embed(title=f"Version {versionID} already exists", description=f"Version {versionID} already exists with the link {downloadmoment} \n if this is the incorrect link update it using !updatelink", colour = random.randint(0, 0xFFFFFF))
         else:
-            embed = discord.Embed(title=f"Wrong link", description=f"The link {downloadLink} is not a valid direct download link", colour = random.randint(0, 0xFFFFFF))    
+            embed = discord.Embed(title=f"Wrong link", description=f"The link {downloadLink} is not a valid direct download link use !convertLink to make it into a direct download link", colour = random.randint(0, 0xFFFFFF))    
         await ctx.send(embed=embed)
 
 @bot.command()
@@ -116,10 +114,20 @@ async def versions(ctx):
 
 @bot.command()
 async def convertLink(ctx, link):
-    driveLink = link.replace("https://1drv.ms/u/","https://api.onedrive.com/v1.0/shares/")
-    DdLink = driveLink[:-9] + "/root/content"
-    embed = discord.Embed(title=f"direct download link for {link} successfully created", description=f"Direct download link: {DdLink}" ,colour = random.randint(0, 0xFFFFFF))
+    if "https://1drv.ms/u/" in link:
+        driveLink = link.replace("https://1drv.ms/u/","https://api.onedrive.com/v1.0/shares/")
+        DdLink = driveLink[:-9] + "/root/content"
+        embed = discord.Embed(title=f"direct download link for {link} successfully created", description=f"Direct download link: {DdLink}" ,colour = random.randint(0, 0xFFFFFF))
+    else:
+        embed = discord.Embed(title=f"Invalid link", description=f"The link {link} is not a valid OneDrive link", colour = random.randint(0, 0xFFFFFF))    
     await ctx.send(embed = embed) 
+
+@bot.command()
+async def suggest(ctx, suggestion):
+    embed = discord.Embed(title=f"Suggested by {ctx.author.name}", description=suggestion ,colour = random.randint(0, 0xFFFFFF))
+    msg = await ctx.send(embed=embed)
+    await msg.add_reaction("👍")
+    await msg.add_reaction("👎")
 
 @bot.event
 async def on_command_error(ctx, error):
@@ -127,17 +135,17 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         embed = discord.Embed(title="Error!",
                               description=f"The command `{ctx.invoked_with}` was not found! We suggest you do `>help` to see all of the commands",
-                              colour=0xe73c24)
+                              colour = random.randint(0, 0xFFFFFF))
         await ctx.send(embed=embed)
     elif isinstance(error, commands.MissingRole):
         embed = discord.Embed(title="Error!",
                               description=f"You don't have permission to execute `{ctx.invoked_with}`.",
-                              colour=0xe73c24)
+                              colour = random.randint(0, 0xFFFFFF))
         await ctx.send(embed=embed)
     else:
         embed = discord.Embed(title="Error!",
                               description=f"`{error}`",
-                              colour=0xe73c24)
+                              colour = random.randint(0, 0xFFFFFF))
         await ctx.send(embed=embed)
         raise error
 
