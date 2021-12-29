@@ -15,6 +15,8 @@ from discord.utils import get
 from discord_webhook import DiscordWebhook
 
 #you shouldnt touch any of this ngl 
+def randomColor():
+    return str(hex(random.randint(0,16777215))) 
 
 bot = commands.Bot(command_prefix = '!', activity=discord.Game(name="Keeping track of builds"))
 TOKEN = os.getenv('BOT_TOKEN')
@@ -42,9 +44,6 @@ async def on_ready():
 async def on_connect():
     await bot.db.setup()
     print("database loaded")
-
-def randomColor():
-    return str(hex(random.randint(0,16777215))) 
 
 @bot.listen()
 async def on_message(message):
