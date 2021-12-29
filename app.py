@@ -11,7 +11,10 @@ versionsDict = {
             "0.0.1":"youtube.com", 
             "0.0.2":"you1tube.com"
            }
-versionList = db.acquireVersions()
+
+loop = asyncio.get_event_loop()
+versionList = loop.create_task(db.get_all_versions())
+
 for x in versionList:
     currID = x["versionid"]
     currLink = x["versiondownload"]
