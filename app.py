@@ -4,7 +4,7 @@ from db import Database
 import asyncio
 
 db = Database()
-
+asyncio.run(db.setup())
 app = Flask(__name__)
 api = Api(app)
 versionsDict = {
