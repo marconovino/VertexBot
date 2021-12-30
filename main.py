@@ -40,8 +40,6 @@ async def on_connect():
     global versionsDict
     await bot.db.setup()
     print("database loaded")
-    
-
 
 @bot.listen()
 async def on_message(message):
