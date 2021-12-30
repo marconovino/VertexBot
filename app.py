@@ -27,7 +27,7 @@ def updateDictionary():
     print(versionsDict)
     conn.close()
 
-class Versions(Resource):
+class GetVersion(Resource):
     def get(self, versionid):
         global versionsDict
         global versionList
@@ -37,6 +37,15 @@ class Versions(Resource):
         else:
             return versionsDict[versionid]
 
-api.add_resource(Versions, "/versions/<string:versionid>")
+class ParseVersions(Resource):
+    def get(self):
+        global versionsDict
+        global versionList
+        updateDictionary()
+        return versionsDict
+        
+
+api.add_resource(GetVersion, "/GetVersion/<string:versionid>")
+api.add_resource(ParseVersions, "/ParseVersions")
 if __name__ == "__main__":
     app.run(debug=False)
