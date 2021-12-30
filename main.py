@@ -138,15 +138,17 @@ async def suggest(ctx, *,suggestion):
 @bot.command()
 async def deletebuild(ctx, versionid):
     versionList = await bot.db.get_all_versions()
-    if versionid not in versionList:
+    for x in versionList:
+        versionIdList.append(x["versionid"])
+    if versionid not in versionIdList:
         embed = discord.Embed(title=f"Version {versionid} not found", description="Please check the spelling, here are all the currently available versions:", colour = random.randint(0, 0xFFFFFF))
-        for x in versionIdList:
-            embed.add_field(name=x[versionid], value="--------",inline=False)
+        for x in versionList:
+            embed.add_field(name=x["versionid"], value="--------",inline=False)
     else:
         await bot.db.delete_version(versionid)
         embed = discord.Embed(title=f"Version {versionid} succesfully deleted", description="Here are all the currently available versions:", colour = random.randint(0, 0xFFFFFF))
-        for x in versionIdList:
-            embed.add_field(name=x[versionid], value="--------",inline=False)
+        for x in versionList:
+            embed.add_field(name=x["versionid"], value="--------",inline=False)
     await ctx.send(embed = embed)
         
 @bot.event
