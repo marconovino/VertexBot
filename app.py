@@ -13,18 +13,19 @@ versionsDict = {
             "0.0.1":"youtube.com", 
             "0.0.2":"you1tube.com"
                }
-
-cur.execute("SELECT * FROM Versions")
-rows = cur.fetchall()
-for row in rows:
-    currID = row[0]
-    currLink = row[1]
-    versionsDict.update({currID:currLink})
-print(versionsDict)
-conn.close()
+def updateDictionary():
+    cur.execute("SELECT * FROM Versions")
+    rows = cur.fetchall()
+    for row in rows:
+        currID = row[0]
+        currLink = row[1]
+        versionsDict.update({currID:currLink})
+    print(versionsDict)
+    conn.close()
 
 class Versions(Resource):
     def get(self, versionid):
+        updateDictionary()
         return versionsDict[versionid]
 
 api.add_resource(Versions, "/versions/<string:versionid>")
