@@ -5,7 +5,7 @@ import os
 
 conn = psycopg2.connect(database=os.getenv('database'), user =os.getenv('user'), password = os.getenv('password'), host = os.getenv('host'), port = "5432")
 print("Opened database successfully")
-cur = conn.cursor()
+
 
 app = Flask(__name__)
 api = Api(app)
@@ -17,6 +17,7 @@ versionsDict = {
 def updateDictionary():
     global versionsDict
     global versionList
+    cur = conn.cursor()
     cur.execute("SELECT * FROM Versions")
     rows = cur.fetchall()
     for row in rows:
