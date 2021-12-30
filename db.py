@@ -39,4 +39,7 @@ class Database:
 
     async def get_all_versions(self):
         return await self.fetch("SELECT * FROM Versions")
+    
+    async def delete_version(self, versionID: str):
+        return await self.execute("DELETE FROM Versions WHERE versionid = $1", versionID)
 
