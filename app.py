@@ -10,8 +10,8 @@ cur = conn.cursor()
 app = Flask(__name__)
 api = Api(app)
 versionsDict = {
-            "0.0.1":"youtube.com", 
-            "0.0.2":"you1tube.com"
+            {"0.0.1":"youtube.com"}, 
+            {"0.0.2":"you1tube.com"}
                }
 
 cur.execute("SELECT * FROM Versions")
