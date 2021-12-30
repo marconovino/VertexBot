@@ -66,7 +66,7 @@ async def getdownload(ctx, versionID):
         if versionID not in versionIdList:
             embed = discord.Embed(title=f"Version {versionID} not found", description="Please check the spelling, here are all the currently available versions:", colour = random.randint(0, 0xFFFFFF))
             for x in versionIdList:
-                embed.add_field(name=x[versionID], value="--------",inline=False)
+                embed.add_field(name=x[versionID], value="** **",inline=False)
             await ctx.send(embed = embed)
         else:
             x = await bot.db.get_version_link(versionID)
@@ -114,7 +114,7 @@ async def versions(ctx):
         embed = discord.Embed(title="Every available build:", colour = random.randint(0, 0xFFFFFF))
         for x in versionList:
             currID = x["versionid"]
-            embed.add_field(name=f"{currID}", value="--------",inline=False)
+            embed.add_field(name=f"{currID}", value="** **",inline=False)
         await ctx.send(embed=embed)
 
 @bot.command()
@@ -150,7 +150,7 @@ async def deletebuild(ctx, versionid):
         embed = discord.Embed(title=f"Version {versionid} succesfully deleted", description="Here are all the currently available versions:", colour = random.randint(0, 0xFFFFFF))
         versionList = await bot.db.get_all_versions()
         for x in versionList:
-            embed.add_field(name=x["versionid"], value="--------",inline=False)
+            embed.add_field(name=x["versionid"], value="** **",inline=False)
     await ctx.send(embed = embed)
         
 @bot.event
