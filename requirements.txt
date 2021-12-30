@@ -5,3 +5,4 @@ discord-webhook
 flask 
 flask_restful
 gunicorn
+psycopg2
