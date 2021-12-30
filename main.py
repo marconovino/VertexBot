@@ -144,7 +144,7 @@ async def deletebuild(ctx, versionid):
         embed = discord.Embed(title=f"Version {versionid} not found", description="Please check the spelling, here are all the currently available versions:", colour = random.randint(0, 0xFFFFFF))
         versionList = await bot.db.get_all_versions()
         for x in versionList:
-            embed.add_field(name=x["versionid"], value="--------",inline=False)
+            embed.add_field(name=x["versionid"], value="** **",inline=False)
     else:
         await bot.db.delete_version(versionid)
         embed = discord.Embed(title=f"Version {versionid} succesfully deleted", description="Here are all the currently available versions:", colour = random.randint(0, 0xFFFFFF))
