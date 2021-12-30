@@ -1,25 +1,27 @@
 from flask import Flask
 from flask_restful import Api, Resource
-from db import Database
-import asyncio
+import psycopg2
+import os
 
-db = Database()
-asyncio.run(db.setup())
+conn = psycopg2.connect(database=os.getenv('database'), user =os.getenv('user'), password = os.getenv('password'), host = os.getenv('host'), port = "5432")
+print("Opened database successfully")
+cur = conn.cursor()
+
 app = Flask(__name__)
 api = Api(app)
 versionsDict = {
             "0.0.1":"youtube.com", 
             "0.0.2":"you1tube.com"
-           }
+               }
 
-loop = asyncio.get_event_loop()
-versionList = asyncio.run(db.get_all_versions())
-
-for x in versionList:
-    currID = x["versionid"]
-    currLink = x["versiondownload"]
+cur.execute("SELECT * FROM Versions")
+rows = cur.fetchall()
+for row in rows:
+    currID = row[0]
+    currLink = row[1]
     versionsDict.update({currID:currLink})
 print(versionsDict)
+conn.close()
 
 class Versions(Resource):
     def get(self, versionid):
