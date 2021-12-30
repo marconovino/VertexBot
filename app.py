@@ -3,10 +3,6 @@ from flask_restful import Api, Resource
 import psycopg2
 import os
 
-conn = psycopg2.connect(database=os.getenv('database'), user =os.getenv('user'), password = os.getenv('password'), host = os.getenv('host'), port = "5432")
-print("Opened database successfully")
-
-
 app = Flask(__name__)
 api = Api(app)
 versionList = []
@@ -15,6 +11,7 @@ versionsDict = {
             "0.0.2":"you1tube.com"
                }
 def updateDictionary():
+    conn = psycopg2.connect(database=os.getenv('database'), user =os.getenv('user'), password = os.getenv('password'), host = os.getenv('host'), port = "5432")
     global versionsDict
     global versionList
     cur = conn.cursor()
