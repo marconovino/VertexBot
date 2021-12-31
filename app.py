@@ -7,7 +7,7 @@ app = Flask(__name__)
 api = Api(app)
 versionList = []
 versionsDict = {}
-CurrentLauncher = 1
+CurrentLauncher = 0
 
 def updateDictionary():
     conn = psycopg2.connect(database=os.getenv('database'), user =os.getenv('user'), password = os.getenv('password'), host = os.getenv('host'), port = "5432")
@@ -49,5 +49,6 @@ class LauncherVersion(Resource):
 api.add_resource(GetVersion, "/GetVersion/<string:versionid>")
 api.add_resource(ParseVersions, "/ParseVersions")
 api.add_resource(LauncherVersion, "/Launcher")
+
 if __name__ == "__main__":
     app.run(debug=False)
