@@ -48,5 +48,6 @@ class LauncherVersion(Resource):
 
 api.add_resource(GetVersion, "/GetVersion/<string:versionid>")
 api.add_resource(ParseVersions, "/ParseVersions")
+api.add_resource(LauncherVersion, "/Launcher")
 if __name__ == "__main__":
     app.run(debug=False)
