@@ -14,7 +14,7 @@ from discord_webhook import DiscordWebhook
 intents = discord.Intents.default()
 intents.members = True
 
-bot = commands.Bot(command_prefix = '!', activity=discord.Game(name="Keeping track of builds"))
+bot = commands.Bot(command_prefix = '!', intents=intents, activity=discord.Game(name="Keeping track of builds"))
 TOKEN = os.getenv('BOT_TOKEN')
 guild = bot.get_guild(880015752533528626)
 DATABASE_URL = os.environ['DATABASE_URL']
