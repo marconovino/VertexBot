@@ -221,7 +221,7 @@ async def on_raw_reaction_remove(payload):
             print("YT-Uploads")
             role = guild.get_role(883372754785681438)
 
-        member = discord.utils.find(lambda m : m.id == payload.user_id, guild.members)
+        member = payload.member
         print(role)
         print(member)
         if role is not None:
