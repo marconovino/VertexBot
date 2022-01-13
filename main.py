@@ -11,6 +11,8 @@ from typing import Text, Tuple
 from math import sqrt
 from discord.utils import get
 from discord_webhook import DiscordWebhook
+intents = discord.Intents.default()
+intents.members = True
 
 bot = commands.Bot(command_prefix = '!', activity=discord.Game(name="Keeping track of builds"))
 TOKEN = os.getenv('BOT_TOKEN')
