@@ -51,6 +51,24 @@ async def on_message(message):
     if message.author == bot.user:
         return
 
+@bot.event
+async def on_member_join(member):
+    channel = bot.get_channel(931235871779348510)
+    guild = bot.get_guild(880015752533528626)
+    role = guild.get_role(894311793688719371)
+    embed = discord.Embed(title="Welcome @"+str(member.name)+ " to Carbon's coom cave (and Marco's schizo hole)", description=f"You are the {channel.guild.member_count}th member!", color=0x40cc88, timestamp=datetime.datetime.now())
+    embed.set_thumbnail(url=guild.icon_url)
+    embed.set_footer(text=guild.name)
+    await channel.send(embed=embed)
+    print(role)
+    print(member)
+    if role is not None:
+        if member is not None:
+            await member.add_roles(role)
+        else:
+            print("no member")
+    else:
+        print("no role")
 
 @bot.command()
 async def getdownload(ctx, versionID):
@@ -150,7 +168,70 @@ async def deletebuild(ctx, versionid):
         for x in versionList:
             embed.add_field(name=x["versionid"], value="** **",inline=False)
     await ctx.send(embed = embed)
-        
+
+@bot.event
+async def on_raw_reaction_add(payload):
+    message_id = payload.message_id
+    if message_id == 895663775175311382:
+        guild = bot.get_guild(payload.guild_id)
+        if payload.emoji.name == '🔴':
+            print("YT-Uploads")
+            role = guild.get_role(883372809995313182)
+        if payload.emoji.name == '🔈':
+            print("YT-Uploads")
+            role = guild.get_role(883372643988942949)
+        if payload.emoji.name == '✅':
+            print("YT-Uploads")
+            role = guild.get_role(931232485382193243)
+        if payload.emoji.name == '🟡':
+            print("YT-Uploads")
+            role = guild.get_role(895662619443224617)
+        if payload.emoji.name == '🥜':
+            print("YT-Uploads")
+            role = guild.get_role(883372754785681438)
+        member = discord.utils.find(lambda m : m.id == payload.user_id, guild.members)
+        print(role)
+        print(member)
+        if role is not None:
+            if member is not None:
+                await member.add_roles(role)
+            else:
+                print("no member")
+        else:
+            print("no role")
+
+@bot.event
+async def on_raw_reaction_remove(payload):
+    message_id = payload.message_id
+    if message_id == 895663775175311382:
+        guild = bot.get_guild(payload.guild_id)
+        if payload.emoji.name == '🔴':
+            print("YT-Uploads")
+            role = guild.get_role(883372809995313182)
+        if payload.emoji.name == '🔈':
+            print("YT-Uploads")
+            role = guild.get_role(883372643988942949)
+        if payload.emoji.name == '✅':
+            print("YT-Uploads")
+            role = guild.get_role(931232485382193243)
+        if payload.emoji.name == '🟡':
+            print("YT-Uploads")
+            role = guild.get_role(895662619443224617)
+        if payload.emoji.name == '🥜':
+            print("YT-Uploads")
+            role = guild.get_role(883372754785681438)
+
+        member = discord.utils.find(lambda m : m.id == payload.user_id, guild.members)
+        print(role)
+        print(member)
+        if role is not None:
+            if member is not None:
+                await member.remove_roles(role)
+            else:
+                print("no member")
+        else:
+            print("no role")
+
 @bot.event
 async def on_command_error(ctx, error):
     logging.error(f'Error on command {ctx.invoked_with}, {error}')
