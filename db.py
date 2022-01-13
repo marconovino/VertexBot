@@ -42,4 +42,4 @@ class Database:
     
     async def delete_version(self, versionID: str):
         return await self.execute("DELETE FROM Versions WHERE versionid = $1", versionID)
-
+    
