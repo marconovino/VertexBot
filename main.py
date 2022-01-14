@@ -60,7 +60,7 @@ async def on_member_join(member):
     guild = bot.get_guild(880015752533528626)
     role = guild.get_role(894311793688719371)
     await channel.send("|| @"+str(member.name)+" ||")
-    embed = discord.Embed(title="Welcome to Carbon's coom cave (and Marco's schizo hole)"+str(member.name)+, description=f"You are the {channel.guild.member_count}th member!", colour = random.randint(0, 0xFFFFFF))
+    embed = discord.Embed(title="Welcome to Carbon's coom cave (and Marco's schizo hole)"+str(member.name), description=f"You are the {channel.guild.member_count}th member!", colour = random.randint(0, 0xFFFFFF))
     embed.set_thumbnail(url=member.avatar_url)
     embed.set_footer(text=guild.name)
     await channel.send(embed=embed)
