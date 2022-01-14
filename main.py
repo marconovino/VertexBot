@@ -1,3 +1,4 @@
+from email import message
 import discord
 import random
 import asyncio
@@ -58,7 +59,8 @@ async def on_member_join(member):
     channel = bot.get_channel(931235871779348510)
     guild = bot.get_guild(880015752533528626)
     role = guild.get_role(894311793688719371)
-    embed = discord.Embed(title="Welcome @"+str(member.name)+ " to Carbon's coom cave (and Marco's schizo hole)", description=f"You are the {channel.guild.member_count}th member!", colour = random.randint(0, 0xFFFFFF))
+    await channel.send("|| @"+str(member.name)+" ||")
+    embed = discord.Embed(title="Welcome to Carbon's coom cave (and Marco's schizo hole)", description=f"You are the {channel.guild.member_count}th member!", colour = random.randint(0, 0xFFFFFF))
     embed.set_thumbnail(url=guild.icon_url)
     embed.set_footer(text=guild.name)
     await channel.send(embed=embed)
